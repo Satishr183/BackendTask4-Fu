@@ -12,12 +12,12 @@ router.get('/api-test',function(req,res){
 //customer API
 router.post('/newCustomer',newCustomer)
 router.post('/newCustomerLogin',customerLogin)
-router.get('/getAllCustomer', authentication, getAllCustomers)
+router.get('/getAllCustomer',  getAllCustomers)
 router.delete('/deleteCustomerByID/:customerID', authentication, authorization, deleteByID)
 
 //card API
 router.post('/newCard', authentication, createCard)
-router.get('/getAllList', authentication, cardList)
+router.get('/getAllList', cardList)
 router.delete('/deleteCardrByID/:customerID/:cardID', authentication, authorization, deleteCardrByID)
 
 
