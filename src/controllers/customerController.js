@@ -1,4 +1,5 @@
 const customerModel = require('../models/customerModel')
+const jwt = require('jsonwebtoken')
 
 const newCustomer = async function(req, res){   
     try{
@@ -22,7 +23,7 @@ const customerLogin = async function(req, res){
               .send({ status: false, message: "please provide an Email !" });
           }
 
-          let email = await userModel.findOne({ emailID: emailID })
+          let email = await customerModel.findOne({ emailID: emailID })
 
           if (!email) {
             return res.status(400).send({ status: false, message: "emailID  is not corerct" })
@@ -54,9 +55,11 @@ const getAllCustomers = async function(req,res){
 }
 
 const deleteByID = async function(req,res){
-    const customerId=req.params.customerId
-    const status = req.body.status
-    deleteCustomer = await customerModel.findByIdAndUpdate({_id:customerId},status,{new:true})
+    const customerId= req.params.customerID
+    console.log(customerId)
+    deleteCustomer = await customerModel.findOneAndUpdate({_id:customerId},{$set:{status:"INACTIVE"}},{new:true})
+    console.log(deleteCustomer)
+    res.status(200).send({status:true, message:'Deleted successfully'})
 }
 
 module.exports = {newCustomer, customerLogin, getAllCustomers, deleteByID}

@@ -1,3 +1,4 @@
+const { set } = require("mongoose")
 const cardModel = require("../models/cardModel")
 const counterModel = require("../models/counterModel")
 
@@ -31,9 +32,15 @@ const createCard = async function(req, res){
 
 }
 
-const cardList = async function(req,res){
+const cardList = async function(req, res){
     const getAllCard = await cardModel.find({status:"ACTIVE"}).populate("customerID")
     res.status(200).send({status:true, data:getAllCard})
 }
 
-module.exports = {createCard, cardList}
+const deleteCardrByID = async function(req, res){
+    const cardID = req.params.cardID
+    const customerID = req.params.customerID
+    const deleteCard = await cardModel.findByIdAndUpdate({_id:cardID,customerID:customerID},{status:"INACTIVE"},{new:true})
+}
+
+module.exports = {createCard, cardList, deleteCardrByID}

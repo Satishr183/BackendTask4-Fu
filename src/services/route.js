@@ -1,15 +1,24 @@
 const express = require('express')
 const router = express.Router()
-const {createCard,cardList} = require('../controllers/cardController')
-const {newCustomer,getAllCustomers, deleteByID} = require('../controllers/customerController')
+const {createCard, cardList, deleteCardrByID} = require('../controllers/cardController')
+const {newCustomer, customerLogin, getAllCustomers, deleteByID} = require('../controllers/customerController')
+const {authentication, authorization} = require('../middleware/auth')
+
 
 router.get('/api-test',function(req,res){
     res.send("Testing")
 })
 
+//customer API
 router.post('/newCustomer',newCustomer)
-router.get('/getAll',getAllCustomers)
-router.delete('/deleteByID',deleteByID)
-router.post('/newCard',createCard)
-router.get('/getAllList',cardList)
+router.post('/newCustomerLogin',customerLogin)
+router.get('/getAllCustomer', authentication, getAllCustomers)
+router.delete('/deleteCustomerByID/:customerID', authentication, authorization, deleteByID)
+
+//card API
+router.post('/newCard', authentication, createCard)
+router.get('/getAllList', authentication, cardList)
+router.delete('/deleteCardrByID/:customerID/:cardID', authentication, authorization, deleteCardrByID)
+
+
 module.exports = router;

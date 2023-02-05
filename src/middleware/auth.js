@@ -11,7 +11,7 @@ const authentication = async function (req, res, next) {
         }
         const bearer = token.split(' ');
         const bearerToken = bearer[1];
-        let decodedtoken = jwt.verify(bearerToken, "functionup-plutonium")
+        let decodedtoken = jwt.verify(bearerToken, process.env.SECRET_KEY)
         if (!(decodedtoken)){
             return res.status(401).send({ status: false, msg: "Invalid Token" })
         } 
@@ -20,6 +20,7 @@ const authentication = async function (req, res, next) {
         next()
     }
     catch (err) {
+        console.log(err)
         if (err.name === "JsonWebTokenError" || err.message==="jwt expired") {
             res.status(401).send({  status: false, msg: err.message });
           } else return res.status(500).send({  status: false, msg: err.message });
@@ -29,7 +30,8 @@ const authentication = async function (req, res, next) {
 const authorization = async function(req, res,next){
 try{    
     const decoded = req.decodedToken
-    const customerID= req.body.customerID
+    console.log(decoded)
+    const customerID= req.params.customerID
 
     if(customerID)
     {
