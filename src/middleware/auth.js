@@ -30,6 +30,7 @@ const authentication = async function (req, res, next) {
 const authorization = async function(req, res,next){
 try{    
     const decoded = req.decodedToken
+    
     const customerID= req.params.customerID
 
     if(customerID)
