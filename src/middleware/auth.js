@@ -30,7 +30,6 @@ const authentication = async function (req, res, next) {
 const authorization = async function(req, res,next){
 try{    
     const decoded = req.decodedToken
-    console.log(decoded)
     const customerID= req.params.customerID
 
     if(customerID)
@@ -48,6 +47,7 @@ try{
 
     }else
         return res.status(400).send({status:false,message:"customerID Required"})
+        
 }catch(err){
     return res.status(500).send({status:false, message:err.message})
 }
