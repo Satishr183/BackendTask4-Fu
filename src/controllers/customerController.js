@@ -59,8 +59,9 @@ const customerLogin = async function(req, res){
         customerID: email._id.toString(),
         token: token
        }
-
+       localStorage.setItem("mytoken",token)
       res.setHeader("Authorization", token);
+
       res.status(200).send({ status: true, message: "Success" });
     
     }catch(err){
