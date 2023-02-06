@@ -5,19 +5,19 @@ const {newCustomer, customerLogin, getAllCustomers, deleteByID} = require('../co
 const {authentication, authorization} = require('../middleware/auth')
 
 
-router.get('/api-test',function(req,res){
-    res.send("Testing")
+router.get('/',function(req,res){
+    res.send("API IS WORKING")
 })
 
 //customer API
 router.post('/newCustomer',newCustomer)
 router.post('/newCustomerLogin',customerLogin)
-router.get('/getAllCustomer',  getAllCustomers)
+router.get('/getAllCustomer', authentication, getAllCustomers)
 router.delete('/deleteCustomerByID/:customerID', authentication, authorization, deleteByID)
 
 //card API
 router.post('/newCard', authentication, createCard)
-router.get('/getAllList', cardList)
+router.get('/getAllList', authentication, cardList)
 router.delete('/deleteCardrByID/:customerID/:cardID', authentication, authorization, deleteCardrByID)
 
 
